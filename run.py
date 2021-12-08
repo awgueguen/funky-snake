@@ -1,5 +1,8 @@
 import pygame
 import random
+import time
+
+from pygame.constants import BLEND_RGB_ADD, SRCALPHA
 
 # global variables ---------------------------------------------------------- #
 green = (0, 250, 0)
@@ -24,6 +27,7 @@ fruit_pos_x = random.randrange(0, dis_width, 10)
 fruit_pos_y = random.randrange(20, dis_height, 10)
 speed_inc = 0
 score_value = 0
+angle = 0
 game_over = False
 close = False
 
@@ -34,11 +38,13 @@ speed = 10
 # functions ----------------------------------------------------------------- #
 clamp = lambda n, nmin=0, nmax=250: (max(min(nmax, n), nmin))
 
+# particles ----------------------------------------------------------------- #
+
 # pygame setup -------------------------------------------------------------- #
 pygame.init()  # affichage de l'écran
 pygame.font.init()
 pygame.display.set_caption("Funky Snake")  # définir le nom de l'écran
-display = pygame.display.set_mode((dis_width, dis_height))
+display = pygame.display.set_mode((dis_width, dis_height), 0, 32)
 
 # text setup ---------------------------------------------------------------- #
 title_font = pygame.font.SysFont("Arial", 30)
@@ -51,6 +57,8 @@ while not close:
 
         # backgroung -------------------------------------------------------- #
         display.fill(dark_grey)
+
+        # test -------------------------------------------------------------- #
 
         # buttons ----------------------------------------------------------- #
         for event in pygame.event.get():
@@ -90,11 +98,35 @@ while not close:
 
         # fruit event ------------------------------------------------------- #
         if snake_pos_x == fruit_pos_x and snake_pos_y == fruit_pos_y:
+            # for i in range(10):
+            #     img = pygame.Surface((dis_width, dis_height),
+            #                           pygame.SRCALPHA, 32)
+            #     pygame.draw.circle(img,
+            #                        (random.randrange(0, 255),
+            #                         random.randrange(0, 255),
+            #                         random.randrange(0, 255),
+            #                         50),
+            #                        (fruit_pos_x + 5,
+            #                         fruit_pos_y + 5),
+            #                         i * 10)
+            #     display.blit(img, (0,0))
             fruit_pos_x = random.randrange(0, dis_width, 10)
             fruit_pos_y = random.randrange(20, dis_height, 10)
             speed_inc += 0.2
             score_value += 1
             snake_size += 1
+            # for i in range(10):
+            #     img = pygame.Surface((dis_width, dis_height),
+            #                           pygame.SRCALPHA, 32)
+            #     pygame.draw.circle(img,
+            #                        (random.randrange(0, 255),
+            #                         random.randrange(0, 255),
+            #                         random.randrange(0, 255),
+            #                         50),
+            #                        (fruit_pos_x + 5,
+            #                         fruit_pos_y + 5),
+            #                         i * 10)
+            #     display.blit(img, (0,0))
 
         # out of bound event ------------------------------------------------ #
         if snake_pos_x == dis_width:
@@ -126,6 +158,16 @@ while not close:
                          width=2,
                          border_radius=5
                          )
+
+        # angle += 6
+        # img.set_colorkey((0,0,0))
+        # pygame.draw.rect(img, white, (dis_width/2, dis_height/2, 10, 10))
+        # display.blit(img, (0, 0))
+        # img_copy = pygame.transform.rotate(img, angle).copy()
+        # display.blit(img_copy, (0, 0))
+        # display.blit(img_copy,
+        #              (dis_width/2 - int((img_copy.get_width()) / 2),
+        #               dis_height/2 - int(img_copy.get_height() / 2)))
 
         # score display ----------------------------------------------------- #
         pygame.draw.rect(display,
