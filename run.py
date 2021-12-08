@@ -2,8 +2,6 @@ import pygame
 import random
 import time
 
-from pygame.constants import BLEND_RGB_ADD, SRCALPHA
-
 # global variables ---------------------------------------------------------- #
 green = (0, 250, 0)
 dark_grey = (30, 30, 30)
@@ -37,6 +35,14 @@ speed = 10
 
 # functions ----------------------------------------------------------------- #
 clamp = lambda n, nmin=0, nmax=250: (max(min(nmax, n), nmin))
+
+
+def foodNotSnake(fruit_pos_x, fruit_pos_y):
+    if [fruit_pos_x, fruit_pos_y] not in snake_tail_positions:
+        return True
+    else:
+        return False
+
 
 # particles ----------------------------------------------------------------- #
 
@@ -110,8 +116,12 @@ while not close:
             #                         fruit_pos_y + 5),
             #                         i * 10)
             #     display.blit(img, (0,0))
-            fruit_pos_x = random.randrange(0, dis_width, 10)
-            fruit_pos_y = random.randrange(20, dis_height, 10)
+            fruit_not_snake = False
+            while fruit_not_snake is False:
+                fruit_pos_x = random.randrange(0, dis_width, 10)
+                fruit_pos_y = random.randrange(20, dis_height, 10)
+                fruit_not_snake = foodNotSnake(fruit_pos_x, fruit_pos_y)
+
             speed_inc += 0.2
             score_value += 1
             snake_size += 1
