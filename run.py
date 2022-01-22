@@ -38,10 +38,7 @@ clamp = lambda n, nmin=0, nmax=250: (max(min(nmax, n), nmin))
 
 
 def foodNotSnake(fruit_pos_x, fruit_pos_y):
-    if [fruit_pos_x, fruit_pos_y] not in snake_tail_positions:
-        return True
-    else:
-        return False
+    return [fruit_pos_x, fruit_pos_y] not in snake_tail_positions
 
 
 # particles ----------------------------------------------------------------- #
@@ -90,10 +87,7 @@ while not close:
                 game_over = True
 
         # mvt & position ---------------------------------------------------- #
-        snake_head_pos = []
-        snake_head_pos.append(snake_pos_x)
-        snake_head_pos.append(snake_pos_y)
-
+        snake_head_pos = [snake_pos_x, snake_pos_y]
         snake_pos_x += snake_move_x
         snake_pos_y += snake_move_y
 
@@ -117,7 +111,7 @@ while not close:
             #                         i * 10)
             #     display.blit(img, (0,0))
             fruit_not_snake = False
-            while fruit_not_snake is False:
+            while not fruit_not_snake:
                 fruit_pos_x = random.randrange(0, dis_width, 10)
                 fruit_pos_y = random.randrange(20, dis_height, 10)
                 fruit_not_snake = foodNotSnake(fruit_pos_x, fruit_pos_y)
@@ -125,18 +119,18 @@ while not close:
             speed_inc += 0.2
             score_value += 1
             snake_size += 1
-            # for i in range(10):
-            #     img = pygame.Surface((dis_width, dis_height),
-            #                           pygame.SRCALPHA, 32)
-            #     pygame.draw.circle(img,
-            #                        (random.randrange(0, 255),
-            #                         random.randrange(0, 255),
-            #                         random.randrange(0, 255),
-            #                         50),
-            #                        (fruit_pos_x + 5,
-            #                         fruit_pos_y + 5),
-            #                         i * 10)
-            #     display.blit(img, (0,0))
+                    # for i in range(10):
+                    #     img = pygame.Surface((dis_width, dis_height),
+                    #                           pygame.SRCALPHA, 32)
+                    #     pygame.draw.circle(img,
+                    #                        (random.randrange(0, 255),
+                    #                         random.randrange(0, 255),
+                    #                         random.randrange(0, 255),
+                    #                         50),
+                    #                        (fruit_pos_x + 5,
+                    #                         fruit_pos_y + 5),
+                    #                         i * 10)
+                    #     display.blit(img, (0,0))
 
         # out of bound event ------------------------------------------------ #
         if snake_pos_x == dis_width:
